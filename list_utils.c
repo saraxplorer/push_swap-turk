@@ -1,31 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   list_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/01/31 20:09:41 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:09:36 by rshaheen      ########   odam.nl         */
+/*   Created: 2024/02/01 19:30:34 by rshaheen      #+#    #+#                 */
+/*   Updated: 2024/03/13 17:14:52 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+int	listsize(t_stack *lst)
 {
-	t_stack	*a;
+	size_t	i;
 
-	if (argc == 1 || (argc == 2 && argv[1][0] == '\0'))
-		exit (1);
-	a = ft_make_llist(argc, argv);
-	if (!a || ft_checkdup(a))
+	i = 0;
+	while (lst)
 	{
-		ft_free(&a);
-		print_error();
+		lst = lst->next;
+		i++;
 	}
-	if (!ft_checksorted(a))
-		ft_sort(&a);
-	ft_free(&a);
-	return (0);
+	return (i);
+}
+
+int	ft_min(t_stack *a)
+{
+	int	i;
+
+	i = a->nbr;
+	while (a)
+	{
+		if (a->nbr < i)
+			i = a->nbr;
+		a = a->next;
+	}
+	return (i);
+}
+
+int	ft_max(t_stack *a)
+{
+	int	i;
+
+	i = a->nbr;
+	while (a)
+	{
+		if (a->nbr > i)
+			i = a->nbr;
+		a = a->next;
+	}
+	return (i);
 }

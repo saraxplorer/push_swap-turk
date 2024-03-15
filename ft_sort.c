@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/02 19:20:55 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/03/06 18:30:12 by rshaheen      ########   odam.nl         */
+/*   Updated: 2024/03/13 16:48:30 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sort_n_push_till_3(t_stack **a, t_stack **b)
 	int		cheapest_op;
 	t_stack	*tmp;
 
-	while (ft_lstsize(*a) > 3 && !ft_checksorted(*a))
+	while (listsize(*a) > 3 && !ft_checksorted(*a))
 	{
 		tmp = *a;
 		cheapest_op = ft_cheapest_rot_ab(*a, *b);
@@ -64,11 +64,11 @@ t_stack	*ft_sort_b(t_stack **a)
 	t_stack	*b;
 
 	b = NULL;
-	if (ft_lstsize(*a) > 3 && !ft_checksorted(*a))
+	if (listsize(*a) > 3 && !ft_checksorted(*a))
 		ft_pb(a, &b, 0);
-	if (ft_lstsize(*a) > 3 && !ft_checksorted(*a))
+	if (listsize(*a) > 3 && !ft_checksorted(*a))
 		ft_pb(a, &b, 0);
-	if (ft_lstsize(*a) > 3 && !ft_checksorted(*a))
+	if (listsize(*a) > 3 && !ft_checksorted(*a))
 		sort_n_push_till_3(a, &b);
 	if (!ft_checksorted(*a))
 		ft_sort_3(a);
@@ -99,26 +99,22 @@ t_stack	**ft_sort_a(t_stack **a, t_stack **b)
 		}
 	}
 	return (a);
-
 }
 
 void	ft_sort(t_stack **a)
 {
 	int		index_of_min;
-	int		remaining_length;
 	t_stack	*b;
 
 	b = NULL;
-	if (ft_lstsize(*a) == 2)
+	if (listsize(*a) == 2)
 		ft_sa(a, 0);
 	else
 	{
 		b = ft_sort_b(a);
 		a = ft_sort_a(a, &b);
 		index_of_min = ft_index(*a, ft_min(*a));
-		remaining_length = ft_lstsize(*a) - index_of_min;
-
-		if (index_of_min < remaining_length)
+		if (index_of_min < listsize(*a) - index_of_min)
 		{
 			while ((*a)->nbr != ft_min(*a))
 				ft_ra(a, 0);
@@ -130,4 +126,3 @@ void	ft_sort(t_stack **a)
 		}
 	}
 }
-

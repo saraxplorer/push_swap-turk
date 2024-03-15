@@ -1,31 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   make_llist_helper.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/01/31 20:09:41 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:09:36 by rshaheen      ########   odam.nl         */
+/*   Created: 2024/03/13 17:15:52 by rshaheen      #+#    #+#                 */
+/*   Updated: 2024/03/15 15:54:59 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+t_stack	*ft_1stlast(t_stack *lst)
 {
-	t_stack	*a;
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
-	if (argc == 1 || (argc == 2 && argv[1][0] == '\0'))
-		exit (1);
-	a = ft_make_llist(argc, argv);
-	if (!a || ft_checkdup(a))
-	{
-		ft_free(&a);
+t_stack	*ft_stack_new(int content)
+{
+	t_stack	*new;
+
+	new = malloc(sizeof(t_stack));
+	if (!new)
 		print_error();
-	}
-	if (!ft_checksorted(a))
-		ft_sort(&a);
-	ft_free(&a);
-	return (0);
+	new->nbr = content;
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_add_back(t_stack **stack, t_stack *stack_new)
+{
+	if (!stack)
+		return ;
+	if (!*stack)
+		*stack = stack_new;
+	else
+		(ft_1stlast(*stack))->next = stack_new;
 }

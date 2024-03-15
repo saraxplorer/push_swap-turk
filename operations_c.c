@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/12 17:45:40 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/02/28 15:58:22 by rshaheen      ########   odam.nl         */
+/*   Updated: 2024/03/15 15:51:08 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_ss(t_stack **a, t_stack **b, int j)
 	(*a)->next = tmp;
 	tmp = *b;
 	*b = (*b)->next;
+	tmp->next = (*b)->next;
 	(*b)->next = tmp;
 	if (j == 0)
 		write(1, "ss\n", 3);
@@ -31,22 +32,44 @@ void	ft_ss(t_stack **a, t_stack **b, int j)
 void	ft_rr(t_stack **a, t_stack **b, int j)
 {
 	t_stack	*temp;
-	t_stack	*last;
 
 	if (!*a || !*b || !(*a)->next || !(*b)->next)
 		return ;
 	temp = *a;
-	*a = (*a)->next;
-	last = ft_1stlast(*a);
-	last->next = temp;
+	*a = ft_1stlast(*a);
+	(*a)->next = temp;
+	*a = temp->next;
 	temp->next = NULL;
 	temp = *b;
-	*b = (*b)->next;
-	last = ft_1stlast(*b);
-	last->next = temp;
+	*b = ft_1stlast(*b);
+	(*b)->next = temp;
+	*b = temp->next;
 	temp->next = NULL;
 	if (j == 0)
 		write(1, "rr\n", 3);
+}
+
+void	ft_rrr_b(t_stack **b, int j)
+{
+	t_stack	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = *b;
+	while ((*b)->next)
+	{
+		i++;
+		*b = (*b)->next;
+	}
+	(*b)->next = tmp;
+	while (i > 1)
+	{
+		tmp = tmp->next;
+		i--;
+	}
+	tmp->next = NULL;
+	if (j == 0)
+		write(1, "rrr\n", 4);
 }
 
 void	ft_rrr_a(t_stack **a, t_stack **b, int j)
@@ -58,10 +81,10 @@ void	ft_rrr_a(t_stack **a, t_stack **b, int j)
 		return ;
 	i = 0;
 	temp = *a;
-	while ((*a)->next != NULL)
+	while ((*a)->next)
 	{
-		*a = (*a)->next;
 		i++;
+		*a = (*a)->next;
 	}
 	(*a)->next = temp;
 	while (i > 1)
@@ -71,27 +94,4 @@ void	ft_rrr_a(t_stack **a, t_stack **b, int j)
 	}
 	temp->next = NULL;
 	ft_rrr_b(b, j);
-}
-
-void	ft_rrr_b(t_stack **b, int j)
-{
-	t_stack	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = *b;
-	while ((*b)->next != NULL)
-	{
-		*b = (*b)->next;
-		i++;
-	}
-	(*b)->next = tmp;
-	while (i > 1)
-	{
-		tmp = tmp->next;
-		i--;
-	}
-	tmp->next = NULL;
-	if (j == 0)
-		write(1, "rrb\n", 4);
 }

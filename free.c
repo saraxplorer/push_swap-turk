@@ -1,31 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   push_swap.c                                        :+:    :+:            */
+/*   freestr.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/01/31 20:09:41 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:09:36 by rshaheen      ########   odam.nl         */
+/*   Created: 2024/02/01 14:25:06 by rshaheen      #+#    #+#                 */
+/*   Updated: 2024/03/13 17:20:19 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+void	ft_freestr(char **lst)
 {
-	t_stack	*a;
+	char	*n1;
 
-	if (argc == 1 || (argc == 2 && argv[1][0] == '\0'))
-		exit (1);
-	a = ft_make_llist(argc, argv);
-	if (!a || ft_checkdup(a))
+	if (!lst)
+		return ;
+	while (*lst)
 	{
-		ft_free(&a);
-		print_error();
+		n1 = *lst;
+		lst++;
+		free (n1);
 	}
-	if (!ft_checksorted(a))
-		ft_sort(&a);
-	ft_free(&a);
-	return (0);
+	*lst = NULL;
+}
+
+void	ft_free(t_stack **lst)
+{
+	t_stack	*tmp;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		(*lst)->nbr = 0;
+		free (*lst);
+		*lst = tmp;
+	}
 }

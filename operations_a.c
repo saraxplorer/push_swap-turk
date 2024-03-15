@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/02 19:45:24 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/03/04 17:40:32 by rshaheen      ########   odam.nl         */
+/*   Updated: 2024/03/15 15:50:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void	ft_sa(t_stack **a, int j)
 void	ft_ra(t_stack **a, int j)
 {
 	t_stack	*tmp;
-	t_stack	*last;
 
 	if (!*a || !(*a)->next)
 		return ;
 	tmp = *a;
-	*a = (*a)->next;
-	last = ft_1stlast(*a);
-	last->next = tmp;
+	*a = ft_1stlast(*a);
+	(*a)->next = tmp;
+	*a = tmp->next;
 	tmp->next = NULL;
 	if (j == 0)
 		write (1, "ra\n", 3);
@@ -56,8 +55,6 @@ void	ft_pa(t_stack **a, t_stack **b, int j)
 		write(1, "pa\n", 3);
 }
 
-
-
 void	ft_rra(t_stack **a, int j)
 {
 	t_stack	*tmp;
@@ -67,10 +64,10 @@ void	ft_rra(t_stack **a, int j)
 		return ;
 	i = 0;
 	tmp = *a;
-	while ((*a)->next != NULL)
+	while ((*a)->next)
 	{
-		i++;
 		*a = (*a)->next;
+		i++;
 	}
 	(*a)->next = tmp;
 	while (i > 1)
